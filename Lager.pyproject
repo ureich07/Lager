@@ -1,0 +1,11 @@
+{
+    "files": [
+        "ConfigSqlConnection.ui",
+        "clsFunction.py",
+        "clsSupportfunction.py",
+        "Lager.py",
+        "Lager.ini",
+        "main.ui",
+        "__init__.py"
+    ]
+}
