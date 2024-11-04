@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>319</width>
+    <width>341</width>
     <height>531</height>
    </rect>
   </property>
@@ -14,17 +14,17 @@
    <string>Artikel erfassen</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="0" column="0" rowspan="2">
     <widget class="QPushButton" name="btSpeichern">
      <property name="text">
       <string>Speichern</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1" colspan="2">
+   <item row="0" column="1" rowspan="2" colspan="3">
     <spacer name="horizontalSpacer">
      <property name="orientation">
-      <enum>Qt::Orientation::Horizontal</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -34,31 +34,41 @@
      </property>
     </spacer>
    </item>
-   <item row="0" column="3" colspan="2">
-    <widget class="QPushButton" name="btCodeCheck">
+   <item row="1" column="3" colspan="3">
+    <widget class="QCheckBox" name="chCodeCheck">
+     <property name="layoutDirection">
+      <enum>Qt::LayoutDirection::RightToLeft</enum>
+     </property>
      <property name="text">
-      <string>Check Code</string>
+      <string>Barcode Check</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>Barcode</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="1" colspan="4">
-    <widget class="QLineEdit" name="tbBarcode"/>
+   <item row="2" column="1" colspan="5">
+    <widget class="QLineEdit" name="tbBarcode">
+     <property name="focusPolicy">
+      <enum>Qt::FocusPolicy::StrongFocus</enum>
+     </property>
+     <property name="readOnly">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
       <string>Name</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="1" colspan="4">
+   <item row="3" column="1" colspan="5">
     <widget class="QLineEdit" name="tbName">
      <property name="minimumSize">
       <size>
@@ -71,14 +81,14 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <widget class="QLabel" name="label_3">
      <property name="text">
       <string>Marke</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1" colspan="4">
+   <item row="4" column="1" colspan="5">
     <widget class="QComboBox" name="coMarke">
      <property name="minimumSize">
       <size>
@@ -86,16 +96,19 @@
        <height>0</height>
       </size>
      </property>
+     <property name="editable">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
-   <item row="4" column="0">
+   <item row="5" column="0">
     <widget class="QLabel" name="label_4">
      <property name="text">
       <string>Hauptkat.</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="1" colspan="4">
+   <item row="5" column="1" colspan="5">
     <widget class="QComboBox" name="coHaupt">
      <property name="minimumSize">
       <size>
@@ -103,16 +116,19 @@
        <height>0</height>
       </size>
      </property>
+     <property name="editable">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item row="6" column="0">
     <widget class="QLabel" name="label_5">
      <property name="text">
       <string>Unterkat.</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="1" colspan="4">
+   <item row="6" column="1" colspan="5">
     <widget class="QComboBox" name="coUnter">
      <property name="minimumSize">
       <size>
@@ -120,16 +136,19 @@
        <height>0</height>
       </size>
      </property>
+     <property name="editable">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
-   <item row="6" column="0">
+   <item row="7" column="0">
     <widget class="QLabel" name="label_7">
      <property name="text">
       <string>Gewicht</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="1">
+   <item row="7" column="1">
     <widget class="QLineEdit" name="tbGroesse">
      <property name="minimumSize">
       <size>
@@ -139,14 +158,14 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="2">
+   <item row="7" column="2" colspan="2">
     <widget class="QLabel" name="label_21">
      <property name="text">
       <string>       Einheit</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="3" colspan="2">
+   <item row="7" column="4" colspan="2">
     <widget class="QComboBox" name="coEinheit">
      <property name="minimumSize">
       <size>
@@ -176,14 +195,14 @@
      </item>
     </widget>
    </item>
-   <item row="7" column="0">
+   <item row="8" column="0">
     <widget class="QLabel" name="label_8">
      <property name="text">
       <string>Ablaufdatum</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
+   <item row="8" column="1">
     <widget class="QLineEdit" name="tbDatum">
      <property name="minimumSize">
       <size>
@@ -196,14 +215,14 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="2">
+   <item row="8" column="2">
     <widget class="QLabel" name="label_22">
      <property name="text">
       <string>       Preis</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="3">
+   <item row="8" column="4">
     <widget class="QLineEdit" name="tbPreis">
      <property name="minimumSize">
       <size>
@@ -213,21 +232,21 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="4">
+   <item row="8" column="5">
     <widget class="QLabel" name="label_9">
      <property name="text">
       <string>€</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="0">
+   <item row="9" column="0">
     <widget class="QLabel" name="label_10">
      <property name="text">
       <string>Anzahl </string>
      </property>
     </widget>
    </item>
-   <item row="8" column="1">
+   <item row="9" column="1">
     <widget class="QLineEdit" name="tbAnzahl">
      <property name="minimumSize">
       <size>
@@ -237,14 +256,14 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="2">
+   <item row="9" column="2">
     <widget class="QLabel" name="label_23">
      <property name="text">
       <string>       Soll</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="3" colspan="2">
+   <item row="9" column="4" colspan="2">
     <widget class="QLineEdit" name="tbSoll">
      <property name="minimumSize">
       <size>
@@ -254,14 +273,14 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="0">
+   <item row="10" column="0">
     <widget class="QLabel" name="label_6">
      <property name="text">
       <string>Lagerort</string>
      </property>
     </widget>
    </item>
-   <item row="9" column="1" colspan="4">
+   <item row="10" column="1" colspan="5">
     <widget class="QComboBox" name="coLager">
      <property name="minimumSize">
       <size>
@@ -269,16 +288,19 @@
        <height>0</height>
       </size>
      </property>
+     <property name="editable">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
-   <item row="10" column="0">
+   <item row="11" column="0">
     <widget class="QLabel" name="label_11">
      <property name="text">
       <string>Brennwert</string>
      </property>
     </widget>
    </item>
-   <item row="10" column="1">
+   <item row="11" column="1">
     <widget class="QLineEdit" name="tbBrennwert">
      <property name="minimumSize">
       <size>
@@ -288,14 +310,14 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="2">
+   <item row="11" column="2" colspan="2">
     <widget class="QLabel" name="label_12">
      <property name="text">
       <string>kJ   Kalorien</string>
      </property>
     </widget>
    </item>
-   <item row="10" column="3">
+   <item row="11" column="4">
     <widget class="QLineEdit" name="tbKalorien">
      <property name="minimumSize">
       <size>
@@ -305,21 +327,21 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="4">
+   <item row="11" column="5">
     <widget class="QLabel" name="label_13">
      <property name="text">
       <string>kcal</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="0">
+   <item row="12" column="0">
     <widget class="QLabel" name="label_15">
      <property name="text">
       <string>Protein</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="1">
+   <item row="12" column="1">
     <widget class="QLineEdit" name="tbProtein">
      <property name="minimumSize">
       <size>
@@ -329,14 +351,14 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="2">
+   <item row="12" column="2">
     <widget class="QLabel" name="label_16">
      <property name="text">
       <string>g   Fett</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="3">
+   <item row="12" column="4">
     <widget class="QLineEdit" name="tbFett">
      <property name="minimumSize">
       <size>
@@ -346,21 +368,21 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="4">
+   <item row="12" column="5">
     <widget class="QLabel" name="label_14">
      <property name="text">
       <string>g</string>
      </property>
     </widget>
    </item>
-   <item row="12" column="0">
+   <item row="13" column="0">
     <widget class="QLabel" name="label_18">
      <property name="text">
       <string>Kohlehydrate</string>
      </property>
     </widget>
    </item>
-   <item row="12" column="1">
+   <item row="13" column="1">
     <widget class="QLineEdit" name="tbKohle">
      <property name="minimumSize">
       <size>
@@ -370,14 +392,14 @@
      </property>
     </widget>
    </item>
-   <item row="12" column="2">
+   <item row="13" column="2">
     <widget class="QLabel" name="label_19">
      <property name="text">
       <string>g  Zucker</string>
      </property>
     </widget>
    </item>
-   <item row="12" column="3">
+   <item row="13" column="4">
     <widget class="QLineEdit" name="tbZucker">
      <property name="minimumSize">
       <size>
@@ -387,24 +409,21 @@
      </property>
     </widget>
    </item>
-   <item row="12" column="4">
+   <item row="13" column="5">
     <widget class="QLabel" name="label_17">
      <property name="text">
       <string>g</string>
      </property>
     </widget>
    </item>
-   <item row="13" column="0">
+   <item row="14" column="0">
     <widget class="QLabel" name="label_20">
      <property name="text">
       <string>Liste</string>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-     </property>
     </widget>
    </item>
-   <item row="13" column="1" colspan="4">
+   <item row="14" column="1" colspan="5">
     <widget class="QTableWidget" name="twListe">
      <property name="minimumSize">
       <size>

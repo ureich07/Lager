@@ -1,5 +1,5 @@
 # This Python file uses the following encoding: utf-8
-import sys, os, datetime, locale
+import sys, os, datetime, locale, time
 
 import pandas as pd
 import webbrowser
@@ -178,20 +178,47 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
         
     def initConfigWindow(self):
         self.setTableAnzahl()
+        self.prRefresh()
+        self.coHaupt.currentTextChanged.connect(self.fillcoUnter)
+        self.btSpeichern.setEnabled(False)
+        #self.btCodeCheck.setEnabled(False)
+        self.btSpeichern.pressed.connect(self.prSpeichern)
+        #self.btCodeCheck.pressed.connect(self.prCodeCheck)
+        self.chCodeCheck.stateChanged.connect(self.onStateChanged)
+        self.tbDatum.setInputMask("99.99.9999")
+        self.tbDatum.editingFinished.connect(self.prCheckDatum)
+        self.tbBarcode.editingFinished.connect(self.prCheckBarcode)
+
+        self.tbAnzahl.editingFinished.connect(self.prEnableSpeichern)
+
+        
+        self.tbBarcode.installEventFilter(self)
+        self.tbBarcode.setFocus()
+        
+    #def eventFilter(self, obj, event):
+    #    if event.type() == QtCore.QEvent.KeyPress and obj is self.tbBarcode:
+    #        if event.key() == QtCore.Qt.Key_Return and self.tbBarcode.hasFocus():
+    #            print('Enter pressed')
+    #    return super().eventFilter(obj, event)
+    
+    def onStateChanged(self):
+        if self.tbBarcode.text().strip() == '': return
+        if self.chCodeCheck.isChecked():
+            self.prCodeCheck()
+        
+    def prRefresh(self):
         self.fillCombobox(conn, self.coMarke, 'marke')
         self.fillCombobox(conn, self.coLager, 'lager')
         self.fillCombobox(conn, self.coHaupt, 'h_kategorie')
         self.fillCombobox(conn, self.coUnter, 'u_kategorie')
-        self.coHaupt.currentTextChanged.connect(self.fillcoUnter)
-        self.btSpeichern.pressed.connect(self.prSpeichern)
-        self.btCodeCheck.pressed.connect(self.prCodeCheck)
-        self.tbDatum.setInputMask("99.99.9999")
-        self.tbDatum.editingFinished.connect(self.prCheckDatum)
-        self.tbBarcode.editingFinished.connect(self.prCheckBarcode)
-        
-        self.tbBarcode.setFocus()
-        
     
+    def prEnableSpeichern(self):
+        if self.tbName.text().strip() == '': return
+        if self.tbBarcode.text().strip() == '': return
+        if self.tbAnzahl.text().strip() == '': return
+        if not self.prCheckDatum(): return
+        self.btSpeichern.setEnabled(True)
+        
     def prSpeichern(self):
         if self.tbName.text().strip() == '': return
         if self.tbBarcode.text().strip() == '': return
@@ -202,13 +229,13 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
         self.prCheckCoBox(self.coLager, "lager")
         if self.prCheckDatum():
             if l_new:
-                
                 self.prSaveArtikel()
                 
             #else:
             #    self.prUpdateArtikel()
             self.prClearFelder()
             self.tbBarcode.setFocus()
+            #self.btCodeCheck.setEnabled(False)
     
     def prCheckCoBox(self, model, table):
         sql = "SELECT name, id FROM " + table + " Where name='" + model.currentText() + "'"
@@ -241,9 +268,10 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
     def prCodeCheck(self):
         url = "https://fddb.info/db/de/suche/?udd=0&cat=site-de&search=" + self.tbBarcode.text()
         webbrowser.open(url)
-    
+       
     def prCheckBarcode(self):
-        s_barcode = self.tbBarcode.text()
+        if self.chCodeCheck.isChecked(): self.prCodeCheck()
+        s_barcode = self.tbBarcode.text().strip().replace("\n","")
         global l_new; l_new = True
         sql = "SELECT * FROM artikel Where barcode='" + s_barcode + "'"
         cur = conn.cursor()
@@ -254,6 +282,7 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
             l_new = False
             self.prfillFormular(value)
             self.tbDatum.setFocus()
+            self.tbDatum.setCursorPosition(0)
             self.enable_felder('Edit',True)
         else:
             self.prClearFelder()
@@ -261,7 +290,9 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
             self.tbName.setFocus()
             self.enable_felder('New',True)
         self.fill_table_anzahl(conn, self.twListe)
-            
+        global l_start; l_start = True
+    
+     
     def enable_felder(self, art, status):
         self.tbName.setReadOnly(not status)
         self.coMarke.setEnabled(status)
@@ -269,7 +300,6 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
         self.coUnter.setEnabled(status)
         self.tbGroesse.setReadOnly(not status)
         self.coEinheit.setEnabled(status)
-
         self.coLager.setEnabled(status)
         self.tbBrennwert.setReadOnly(not status)
         self.tbKalorien.setReadOnly(not status)
@@ -291,7 +321,6 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
             self.tbFett.setReadOnly(status)
             self.tbKohle.setReadOnly(status)
             self.tbZucker.setReadOnly(status)
-
        
     def prfillFormular(self, value):
         self.tbName.setText(value[1])
@@ -299,7 +328,7 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
         self.coUnter.setCurrentText(value[3])
         self.coMarke.setCurrentText(value[4])
         self.tbAnzahl.setText('') 
-        self.tbSoll.setText('') 
+        self.tbSoll.setText(value[7]) 
         self.tbGroesse.setText(value[8]) 
         self.coEinheit.setCurrentText(value[9])
         self.tbDatum.setText('') 
@@ -313,9 +342,9 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
         
         
         self.coLager.setCurrentText('')
-        
             
     def prSaveArtikel(self):
+        global l_start; l_start = False
         id = clsSu.get_time_id()
         fields = clsFu.strucktur_artikel()
         value = self.collect_value_artikel(id)
@@ -349,7 +378,11 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
         
         
     def collect_value_artikel(self, id):
-        pass
+        value =  [id, self.tbName.text(), self.coHaupt.currentText(), self.coUnter.currentText(), self.coMarke.currentText(), self.tbBarcode.text(),
+                  self.tbAnzahl.text(), self.tbSoll.text(), self.tbGroesse.text, self.coEinheit.currentText(), self.tbBrennwert.text(), 
+                  self.tbKalorien.text(), self.tbProtein.text(), self.tbKohle.text(), self.tbZucker.text(), self.tbFett.text(), self.tbPreis.text()]  
+        return value
+        
         
     def fillcoUnter(self):
         self.fillCombobox(conn, self.coUnter, 'u_kategorie')
@@ -377,14 +410,6 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
                 value= df.iloc[row_number][i]
                 model.setItem(row_number,i, QtWidgets.QTableWidgetItem(value)) 
                
-        #model.setColumnWidth(0,80)
-        #model.setColumnWidth(1,50)
-        #model.setColumnWidth(2,80)
-        #model.setColumnWidth(3,0)
-        #model.hideColumn(3)
-        #model.sortItems(0, QtCore.Qt.AscendingOrder)
-        #model.selectRow(0)
-    
     def setTableAnzahl(self):
         self.twListe.setColumnWidth(0,80)
         self.twListe.setColumnWidth(1,50)

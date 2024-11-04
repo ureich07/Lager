@@ -15,102 +15,108 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QDialog, QGridLayout,
-    QHeaderView, QLabel, QLineEdit, QPushButton,
-    QSizePolicy, QSpacerItem, QTableWidget, QTableWidgetItem,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
+    QGridLayout, QHeaderView, QLabel, QLineEdit,
+    QPushButton, QSizePolicy, QSpacerItem, QTableWidget,
+    QTableWidgetItem, QWidget)
 
 class Ui_ArtikelErfassen(object):
     def setupUi(self, ArtikelErfassen):
         if not ArtikelErfassen.objectName():
             ArtikelErfassen.setObjectName(u"ArtikelErfassen")
-        ArtikelErfassen.resize(319, 531)
+        ArtikelErfassen.resize(341, 531)
         self.gridLayout = QGridLayout(ArtikelErfassen)
         self.gridLayout.setObjectName(u"gridLayout")
         self.btSpeichern = QPushButton(ArtikelErfassen)
         self.btSpeichern.setObjectName(u"btSpeichern")
 
-        self.gridLayout.addWidget(self.btSpeichern, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.btSpeichern, 0, 0, 2, 1)
 
-        self.horizontalSpacer = QSpacerItem(126, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.horizontalSpacer = QSpacerItem(126, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.gridLayout.addItem(self.horizontalSpacer, 0, 1, 1, 2)
+        self.gridLayout.addItem(self.horizontalSpacer, 0, 1, 2, 3)
 
-        self.btCodeCheck = QPushButton(ArtikelErfassen)
-        self.btCodeCheck.setObjectName(u"btCodeCheck")
+        self.chCodeCheck = QCheckBox(ArtikelErfassen)
+        self.chCodeCheck.setObjectName(u"chCodeCheck")
+        self.chCodeCheck.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
 
-        self.gridLayout.addWidget(self.btCodeCheck, 0, 3, 1, 2)
+        self.gridLayout.addWidget(self.chCodeCheck, 1, 3, 1, 3)
 
         self.label = QLabel(ArtikelErfassen)
         self.label.setObjectName(u"label")
 
-        self.gridLayout.addWidget(self.label, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.label, 2, 0, 1, 1)
 
         self.tbBarcode = QLineEdit(ArtikelErfassen)
         self.tbBarcode.setObjectName(u"tbBarcode")
+        self.tbBarcode.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+        self.tbBarcode.setReadOnly(False)
 
-        self.gridLayout.addWidget(self.tbBarcode, 1, 1, 1, 4)
+        self.gridLayout.addWidget(self.tbBarcode, 2, 1, 1, 5)
 
         self.label_2 = QLabel(ArtikelErfassen)
         self.label_2.setObjectName(u"label_2")
 
-        self.gridLayout.addWidget(self.label_2, 2, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_2, 3, 0, 1, 1)
 
         self.tbName = QLineEdit(ArtikelErfassen)
         self.tbName.setObjectName(u"tbName")
         self.tbName.setMinimumSize(QSize(211, 0))
         self.tbName.setReadOnly(False)
 
-        self.gridLayout.addWidget(self.tbName, 2, 1, 1, 4)
+        self.gridLayout.addWidget(self.tbName, 3, 1, 1, 5)
 
         self.label_3 = QLabel(ArtikelErfassen)
         self.label_3.setObjectName(u"label_3")
 
-        self.gridLayout.addWidget(self.label_3, 3, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_3, 4, 0, 1, 1)
 
         self.coMarke = QComboBox(ArtikelErfassen)
         self.coMarke.setObjectName(u"coMarke")
         self.coMarke.setMinimumSize(QSize(211, 0))
+        self.coMarke.setEditable(True)
 
-        self.gridLayout.addWidget(self.coMarke, 3, 1, 1, 4)
+        self.gridLayout.addWidget(self.coMarke, 4, 1, 1, 5)
 
         self.label_4 = QLabel(ArtikelErfassen)
         self.label_4.setObjectName(u"label_4")
 
-        self.gridLayout.addWidget(self.label_4, 4, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_4, 5, 0, 1, 1)
 
         self.coHaupt = QComboBox(ArtikelErfassen)
         self.coHaupt.setObjectName(u"coHaupt")
         self.coHaupt.setMinimumSize(QSize(211, 0))
+        self.coHaupt.setEditable(True)
 
-        self.gridLayout.addWidget(self.coHaupt, 4, 1, 1, 4)
+        self.gridLayout.addWidget(self.coHaupt, 5, 1, 1, 5)
 
         self.label_5 = QLabel(ArtikelErfassen)
         self.label_5.setObjectName(u"label_5")
 
-        self.gridLayout.addWidget(self.label_5, 5, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_5, 6, 0, 1, 1)
 
         self.coUnter = QComboBox(ArtikelErfassen)
         self.coUnter.setObjectName(u"coUnter")
         self.coUnter.setMinimumSize(QSize(211, 0))
+        self.coUnter.setEditable(True)
 
-        self.gridLayout.addWidget(self.coUnter, 5, 1, 1, 4)
+        self.gridLayout.addWidget(self.coUnter, 6, 1, 1, 5)
 
         self.label_7 = QLabel(ArtikelErfassen)
         self.label_7.setObjectName(u"label_7")
 
-        self.gridLayout.addWidget(self.label_7, 6, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_7, 7, 0, 1, 1)
 
         self.tbGroesse = QLineEdit(ArtikelErfassen)
         self.tbGroesse.setObjectName(u"tbGroesse")
         self.tbGroesse.setMinimumSize(QSize(61, 0))
 
-        self.gridLayout.addWidget(self.tbGroesse, 6, 1, 1, 1)
+        self.gridLayout.addWidget(self.tbGroesse, 7, 1, 1, 1)
 
         self.label_21 = QLabel(ArtikelErfassen)
         self.label_21.setObjectName(u"label_21")
 
-        self.gridLayout.addWidget(self.label_21, 6, 2, 1, 1)
+        self.gridLayout.addWidget(self.label_21, 7, 2, 1, 2)
 
         self.coEinheit = QComboBox(ArtikelErfassen)
         self.coEinheit.addItem("")
@@ -120,154 +126,154 @@ class Ui_ArtikelErfassen(object):
         self.coEinheit.setObjectName(u"coEinheit")
         self.coEinheit.setMinimumSize(QSize(75, 0))
 
-        self.gridLayout.addWidget(self.coEinheit, 6, 3, 1, 2)
+        self.gridLayout.addWidget(self.coEinheit, 7, 4, 1, 2)
 
         self.label_8 = QLabel(ArtikelErfassen)
         self.label_8.setObjectName(u"label_8")
 
-        self.gridLayout.addWidget(self.label_8, 7, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_8, 8, 0, 1, 1)
 
         self.tbDatum = QLineEdit(ArtikelErfassen)
         self.tbDatum.setObjectName(u"tbDatum")
         self.tbDatum.setMinimumSize(QSize(61, 0))
 
-        self.gridLayout.addWidget(self.tbDatum, 7, 1, 1, 1)
+        self.gridLayout.addWidget(self.tbDatum, 8, 1, 1, 1)
 
         self.label_22 = QLabel(ArtikelErfassen)
         self.label_22.setObjectName(u"label_22")
 
-        self.gridLayout.addWidget(self.label_22, 7, 2, 1, 1)
+        self.gridLayout.addWidget(self.label_22, 8, 2, 1, 1)
 
         self.tbPreis = QLineEdit(ArtikelErfassen)
         self.tbPreis.setObjectName(u"tbPreis")
         self.tbPreis.setMinimumSize(QSize(56, 0))
 
-        self.gridLayout.addWidget(self.tbPreis, 7, 3, 1, 1)
+        self.gridLayout.addWidget(self.tbPreis, 8, 4, 1, 1)
 
         self.label_9 = QLabel(ArtikelErfassen)
         self.label_9.setObjectName(u"label_9")
 
-        self.gridLayout.addWidget(self.label_9, 7, 4, 1, 1)
+        self.gridLayout.addWidget(self.label_9, 8, 5, 1, 1)
 
         self.label_10 = QLabel(ArtikelErfassen)
         self.label_10.setObjectName(u"label_10")
 
-        self.gridLayout.addWidget(self.label_10, 8, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_10, 9, 0, 1, 1)
 
         self.tbAnzahl = QLineEdit(ArtikelErfassen)
         self.tbAnzahl.setObjectName(u"tbAnzahl")
         self.tbAnzahl.setMinimumSize(QSize(61, 0))
 
-        self.gridLayout.addWidget(self.tbAnzahl, 8, 1, 1, 1)
+        self.gridLayout.addWidget(self.tbAnzahl, 9, 1, 1, 1)
 
         self.label_23 = QLabel(ArtikelErfassen)
         self.label_23.setObjectName(u"label_23")
 
-        self.gridLayout.addWidget(self.label_23, 8, 2, 1, 1)
+        self.gridLayout.addWidget(self.label_23, 9, 2, 1, 1)
 
         self.tbSoll = QLineEdit(ArtikelErfassen)
         self.tbSoll.setObjectName(u"tbSoll")
         self.tbSoll.setMinimumSize(QSize(75, 0))
 
-        self.gridLayout.addWidget(self.tbSoll, 8, 3, 1, 2)
+        self.gridLayout.addWidget(self.tbSoll, 9, 4, 1, 2)
 
         self.label_6 = QLabel(ArtikelErfassen)
         self.label_6.setObjectName(u"label_6")
 
-        self.gridLayout.addWidget(self.label_6, 9, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_6, 10, 0, 1, 1)
 
         self.coLager = QComboBox(ArtikelErfassen)
         self.coLager.setObjectName(u"coLager")
         self.coLager.setMinimumSize(QSize(211, 0))
+        self.coLager.setEditable(True)
 
-        self.gridLayout.addWidget(self.coLager, 9, 1, 1, 4)
+        self.gridLayout.addWidget(self.coLager, 10, 1, 1, 5)
 
         self.label_11 = QLabel(ArtikelErfassen)
         self.label_11.setObjectName(u"label_11")
 
-        self.gridLayout.addWidget(self.label_11, 10, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_11, 11, 0, 1, 1)
 
         self.tbBrennwert = QLineEdit(ArtikelErfassen)
         self.tbBrennwert.setObjectName(u"tbBrennwert")
         self.tbBrennwert.setMinimumSize(QSize(61, 0))
 
-        self.gridLayout.addWidget(self.tbBrennwert, 10, 1, 1, 1)
+        self.gridLayout.addWidget(self.tbBrennwert, 11, 1, 1, 1)
 
         self.label_12 = QLabel(ArtikelErfassen)
         self.label_12.setObjectName(u"label_12")
 
-        self.gridLayout.addWidget(self.label_12, 10, 2, 1, 1)
+        self.gridLayout.addWidget(self.label_12, 11, 2, 1, 2)
 
         self.tbKalorien = QLineEdit(ArtikelErfassen)
         self.tbKalorien.setObjectName(u"tbKalorien")
         self.tbKalorien.setMinimumSize(QSize(56, 0))
 
-        self.gridLayout.addWidget(self.tbKalorien, 10, 3, 1, 1)
+        self.gridLayout.addWidget(self.tbKalorien, 11, 4, 1, 1)
 
         self.label_13 = QLabel(ArtikelErfassen)
         self.label_13.setObjectName(u"label_13")
 
-        self.gridLayout.addWidget(self.label_13, 10, 4, 1, 1)
+        self.gridLayout.addWidget(self.label_13, 11, 5, 1, 1)
 
         self.label_15 = QLabel(ArtikelErfassen)
         self.label_15.setObjectName(u"label_15")
 
-        self.gridLayout.addWidget(self.label_15, 11, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_15, 12, 0, 1, 1)
 
         self.tbProtein = QLineEdit(ArtikelErfassen)
         self.tbProtein.setObjectName(u"tbProtein")
         self.tbProtein.setMinimumSize(QSize(61, 0))
 
-        self.gridLayout.addWidget(self.tbProtein, 11, 1, 1, 1)
+        self.gridLayout.addWidget(self.tbProtein, 12, 1, 1, 1)
 
         self.label_16 = QLabel(ArtikelErfassen)
         self.label_16.setObjectName(u"label_16")
 
-        self.gridLayout.addWidget(self.label_16, 11, 2, 1, 1)
+        self.gridLayout.addWidget(self.label_16, 12, 2, 1, 1)
 
         self.tbFett = QLineEdit(ArtikelErfassen)
         self.tbFett.setObjectName(u"tbFett")
         self.tbFett.setMinimumSize(QSize(56, 0))
 
-        self.gridLayout.addWidget(self.tbFett, 11, 3, 1, 1)
+        self.gridLayout.addWidget(self.tbFett, 12, 4, 1, 1)
 
         self.label_14 = QLabel(ArtikelErfassen)
         self.label_14.setObjectName(u"label_14")
 
-        self.gridLayout.addWidget(self.label_14, 11, 4, 1, 1)
+        self.gridLayout.addWidget(self.label_14, 12, 5, 1, 1)
 
         self.label_18 = QLabel(ArtikelErfassen)
         self.label_18.setObjectName(u"label_18")
 
-        self.gridLayout.addWidget(self.label_18, 12, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_18, 13, 0, 1, 1)
 
         self.tbKohle = QLineEdit(ArtikelErfassen)
         self.tbKohle.setObjectName(u"tbKohle")
         self.tbKohle.setMinimumSize(QSize(61, 0))
 
-        self.gridLayout.addWidget(self.tbKohle, 12, 1, 1, 1)
+        self.gridLayout.addWidget(self.tbKohle, 13, 1, 1, 1)
 
         self.label_19 = QLabel(ArtikelErfassen)
         self.label_19.setObjectName(u"label_19")
 
-        self.gridLayout.addWidget(self.label_19, 12, 2, 1, 1)
+        self.gridLayout.addWidget(self.label_19, 13, 2, 1, 1)
 
         self.tbZucker = QLineEdit(ArtikelErfassen)
         self.tbZucker.setObjectName(u"tbZucker")
         self.tbZucker.setMinimumSize(QSize(56, 0))
 
-        self.gridLayout.addWidget(self.tbZucker, 12, 3, 1, 1)
+        self.gridLayout.addWidget(self.tbZucker, 13, 4, 1, 1)
 
         self.label_17 = QLabel(ArtikelErfassen)
         self.label_17.setObjectName(u"label_17")
 
-        self.gridLayout.addWidget(self.label_17, 12, 4, 1, 1)
+        self.gridLayout.addWidget(self.label_17, 13, 5, 1, 1)
 
         self.label_20 = QLabel(ArtikelErfassen)
         self.label_20.setObjectName(u"label_20")
-        self.label_20.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
 
-        self.gridLayout.addWidget(self.label_20, 13, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_20, 14, 0, 1, 1)
 
         self.twListe = QTableWidget(ArtikelErfassen)
         if (self.twListe.columnCount() < 4):
@@ -283,7 +289,7 @@ class Ui_ArtikelErfassen(object):
         self.twListe.setObjectName(u"twListe")
         self.twListe.setMinimumSize(QSize(211, 0))
 
-        self.gridLayout.addWidget(self.twListe, 13, 1, 1, 4)
+        self.gridLayout.addWidget(self.twListe, 14, 1, 1, 5)
 
 
         self.retranslateUi(ArtikelErfassen)
@@ -294,7 +300,7 @@ class Ui_ArtikelErfassen(object):
     def retranslateUi(self, ArtikelErfassen):
         ArtikelErfassen.setWindowTitle(QCoreApplication.translate("ArtikelErfassen", u"Artikel erfassen", None))
         self.btSpeichern.setText(QCoreApplication.translate("ArtikelErfassen", u"Speichern", None))
-        self.btCodeCheck.setText(QCoreApplication.translate("ArtikelErfassen", u"Check Code", None))
+        self.chCodeCheck.setText(QCoreApplication.translate("ArtikelErfassen", u"Barcode Check", None))
         self.label.setText(QCoreApplication.translate("ArtikelErfassen", u"Barcode", None))
         self.label_2.setText(QCoreApplication.translate("ArtikelErfassen", u"Name", None))
         self.label_3.setText(QCoreApplication.translate("ArtikelErfassen", u"Marke", None))
