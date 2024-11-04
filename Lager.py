@@ -37,6 +37,7 @@ l_edit = False
 l_delete = False
 l_start = False
 l_pwd = False
+n_id = 0
 s_password =""
 conn = clsDb.fcConnectDb(arIni['user'],arIni['pw'], arIni['ip'], arIni['port'], arIni['db'])
 cur = conn.cursor()
@@ -175,32 +176,20 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
         self.setupUi(self)
         self.initConfigWindow()
         
-        
     def initConfigWindow(self):
         self.setTableAnzahl()
         self.prRefresh()
         self.coHaupt.currentTextChanged.connect(self.fillcoUnter)
         self.btSpeichern.setEnabled(False)
-        #self.btCodeCheck.setEnabled(False)
         self.btSpeichern.pressed.connect(self.prSpeichern)
-        #self.btCodeCheck.pressed.connect(self.prCodeCheck)
         self.chCodeCheck.stateChanged.connect(self.onStateChanged)
         self.tbDatum.setInputMask("99.99.9999")
         self.tbDatum.editingFinished.connect(self.prCheckDatum)
         self.tbBarcode.editingFinished.connect(self.prCheckBarcode)
-
         self.tbAnzahl.editingFinished.connect(self.prEnableSpeichern)
-
-        
         self.tbBarcode.installEventFilter(self)
         self.tbBarcode.setFocus()
         
-    #def eventFilter(self, obj, event):
-    #    if event.type() == QtCore.QEvent.KeyPress and obj is self.tbBarcode:
-    #        if event.key() == QtCore.Qt.Key_Return and self.tbBarcode.hasFocus():
-    #            print('Enter pressed')
-    #    return super().eventFilter(obj, event)
-    
     def onStateChanged(self):
         if self.tbBarcode.text().strip() == '': return
         if self.chCodeCheck.isChecked():
@@ -230,12 +219,11 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
         if self.prCheckDatum():
             if l_new:
                 self.prSaveArtikel()
-                
-            #else:
-            #    self.prUpdateArtikel()
+            else:
+                self.prUpdateArtikel()
+            self.prSaveBuchung()
             self.prClearFelder()
             self.tbBarcode.setFocus()
-            #self.btCodeCheck.setEnabled(False)
     
     def prCheckCoBox(self, model, table):
         sql = "SELECT name, id FROM " + table + " Where name='" + model.currentText() + "'"
@@ -284,6 +272,7 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
             self.tbDatum.setFocus()
             self.tbDatum.setCursorPosition(0)
             self.enable_felder('Edit',True)
+            self.prEnableEmptyFelder()
         else:
             self.prClearFelder()
             self.tbBarcode.setText(s_barcode)
@@ -291,7 +280,6 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
             self.enable_felder('New',True)
         self.fill_table_anzahl(conn, self.twListe)
         global l_start; l_start = True
-    
      
     def enable_felder(self, art, status):
         self.tbName.setReadOnly(not status)
@@ -323,6 +311,7 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
             self.tbZucker.setReadOnly(status)
        
     def prfillFormular(self, value):
+        global n_id; n_id = value[0]
         self.tbName.setText(value[1])
         self.coHaupt.setCurrentText(value[2])
         self.coUnter.setCurrentText(value[3])
@@ -342,17 +331,15 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
         
         
         self.coLager.setCurrentText('')
-            
-    def prSaveArtikel(self):
-        global l_start; l_start = False
-        id = clsSu.get_time_id()
-        fields = clsFu.strucktur_artikel()
-        value = self.collect_value_artikel(id)
-        try:
-            if clsDb.insert_command(cur, 'artikel', fields, value):
-                conn.commit()
-        except Exception as e:
-            clsSu.error_file('save_artikel', str(e))
+    
+    def prEnableEmptyFelder(self):
+        if self.tbGroesse.text().strip() == '': self.tbGroesse.setReadOnly(False)
+        if self.tbBrennwert.text().strip() == '': self.tbBrennwert.setReadOnly(False)
+        if self.tbKalorien.text().strip() == '': self.tbKalorien.setReadOnly(False)
+        if self.tbProtein.text().strip() == '': self.tbProtein.setReadOnly(False)
+        if self.tbFett.text().strip() == '': self.tbFett.setReadOnly(False)
+        if self.tbKohle.text().strip() == '': self.tbKohle.setReadOnly(False)
+        if self.tbZucker.text().strip() == '': self.tbZucker.setReadOnly(False)
     
     def prClearFelder(self):
         self.tbBarcode.setText('') 
@@ -375,14 +362,46 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
         self.coLager.setCurrentIndex(0)
         self.coEinheit.setCurrentIndex(0)
         
-        
-        
+    def prSaveArtikel(self):
+        global l_start; l_start = False
+        id = clsSu.get_time_id()
+        fields = clsFu.strucktur_artikel()
+        value = self.collect_value_artikel(id)
+        try:
+            if clsDb.insert_command(cur, 'artikel', fields, value):
+                conn.commit()
+        except Exception as e:
+            clsSu.error_file('save_artikel', str(e))
+    
+    def prUpdateArtikel(self):
+        global l_start; l_start = False
+        fields = clsFu.strucktur_artikel()
+        value = self.collect_value_artikel(n_id)
+        try:
+            if clsDb.update_command(cur, 'artikel', fields, value, n_id):
+                conn.commit()
+        except Exception as e:
+            clsSu.error_file('save_artikel', str(e))
+    
+    def prSaveBuchung(self):
+        id = clsSu.get_time_id()
+        fields = clsFu.strucktur_buchung()
+        value = self.collect_value_buchnung(id)
+        try:
+            if clsDb.insert_command(cur, 'buchung', fields, value):
+                conn.commit()
+        except Exception as e:
+            clsSu.error_file('save_buchung', str(e))
+    
     def collect_value_artikel(self, id):
         value =  [id, self.tbName.text(), self.coHaupt.currentText(), self.coUnter.currentText(), self.coMarke.currentText(), self.tbBarcode.text(),
-                  self.tbAnzahl.text(), self.tbSoll.text(), self.tbGroesse.text, self.coEinheit.currentText(), self.tbBrennwert.text(), 
+                  self.tbAnzahl.text(), self.tbSoll.text(), self.tbGroesse.text(), self.coEinheit.currentText(), self.tbBrennwert.text(), 
                   self.tbKalorien.text(), self.tbProtein.text(), self.tbKohle.text(), self.tbZucker.text(), self.tbFett.text(), self.tbPreis.text()]  
-        return value
+        return value    
         
+    def collect_value_buchnung(self, id):
+        value =  [id, self.tbBarcode.text(), self.coLager.currentText(), self.tbDatum.text(), self.tbName.text() ,self.tbPreis.text(),  self.tbAnzahl.text()]  
+        return value
         
     def fillcoUnter(self):
         self.fillCombobox(conn, self.coUnter, 'u_kategorie')

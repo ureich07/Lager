@@ -55,7 +55,7 @@ class Function():
     
     def strucktur_artikel():
         fields =  ['id', 'name', 'h_kategorie', 'u_kategorie', 'marke', 'barcode', 'anzahl', 'soll', 'gewicht', 
-                   'einheit', 'brennwert', 'kalorien', 'protoien', 'kohlehydrate', 'zucker', 'fett', 'preis']
+                   'einheit', 'brennwert', 'kalorien', 'protein', 'kohlehydrate', 'zucker', 'fett', 'preis']
         return fields
 
     def strucktur_buchung():

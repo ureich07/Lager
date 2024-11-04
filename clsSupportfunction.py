@@ -96,8 +96,7 @@ class DataBase():
                     ar_value.append(fields[i] + " = '" + value[i] + "'")
                 s_value = ','.join(ar_value)
                 sql = "UPDATE " + table + " SET " + s_value + " WHERE id = '" + id + "'"
-                print(sql)
-                print(sql)
+                #print(sql)
                 cur.execute(sql, value )
                 status = True
             else:
