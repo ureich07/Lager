@@ -14,7 +14,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QDialog, QAbstractItemV
 from PySide6.QtGui import  QValidator, QIcon, Qt#, QDoubleValidator, QIntValidator, QMouseEvent
 
 
-from PySide6 import  QtCore, QtWidgets
+from PySide6 import  QtCore, QtWidgets, QtGui
 
 # Important:
 # You need to run the following command to generate the ui_form.py file
@@ -38,11 +38,19 @@ l_delete = False
 l_start = False
 l_pwd = False
 n_id = 0
+n_anzahl = 0
 s_password =""
+
 conn = clsDb.fcConnectDb(arIni['user'],arIni['pw'], arIni['ip'], arIni['port'], arIni['db'])
 cur = conn.cursor()
 basedir = os.path.dirname(__file__)
+#################################### Globale Funktionen ##################################################################
+def prSetAgliment(value):
+    item = QtWidgets.QTableWidgetItem(value) 
+    item.setTextAlignment(Qt.AlignCenter)
+    return item
 
+#################################### Hilfs Funktionen ##################################################################                
 class ConfigSQLConnection(QDialog, Ui_ConfigSQLConnection):
     def __init__(self, parent=None):
         """Initializer."""
@@ -274,6 +282,7 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
             self.enable_felder('Edit',True)
             self.prEnableEmptyFelder()
         else:
+            global n_anzahl; n_anzahl = 0
             self.prClearFelder()
             self.tbBarcode.setText(s_barcode)
             self.tbName.setFocus()
@@ -312,6 +321,7 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
        
     def prfillFormular(self, value):
         global n_id; n_id = value[0]
+        global n_anzahl; n_anzahl = value[6]
         self.tbName.setText(value[1])
         self.coHaupt.setCurrentText(value[2])
         self.coUnter.setCurrentText(value[3])
@@ -384,6 +394,7 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
             clsSu.error_file('save_artikel', str(e))
     
     def prSaveBuchung(self):
+        time.sleep(1)
         id = clsSu.get_time_id()
         fields = clsFu.strucktur_buchung()
         value = self.collect_value_buchnung(id)
@@ -394,8 +405,9 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
             clsSu.error_file('save_buchung', str(e))
     
     def collect_value_artikel(self, id):
+        n_anz = int(n_anzahl) + int(self.tbAnzahl.text())
         value =  [id, self.tbName.text(), self.coHaupt.currentText(), self.coUnter.currentText(), self.coMarke.currentText(), self.tbBarcode.text(),
-                  self.tbAnzahl.text(), self.tbSoll.text(), self.tbGroesse.text(), self.coEinheit.currentText(), self.tbBrennwert.text(), 
+                  str(n_anz), self.tbSoll.text(), self.tbGroesse.text(), self.coEinheit.currentText(), self.tbBrennwert.text(), 
                   self.tbKalorien.text(), self.tbProtein.text(), self.tbKohle.text(), self.tbZucker.text(), self.tbFett.text(), self.tbPreis.text()]  
         return value    
         
@@ -427,7 +439,8 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
             model.insertRow(row_number)
             for i in range(0, 4):
                 value= df.iloc[row_number][i]
-                model.setItem(row_number,i, QtWidgets.QTableWidgetItem(value)) 
+                model.setItem(row_number,i, prSetAgliment(value))
+                
                
     def setTableAnzahl(self):
         self.twListe.setColumnWidth(0,80)
@@ -452,33 +465,101 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btConfig.triggered.connect(self.settings)
         self.btErfassen.triggered.connect(self.prErfassen)
         self.btBearbeiten.triggered.connect(self.prKategorie)
+        self.prRefresh()
         
      
         
         """Artikel"""
         row =clsDb.get_number_of_row(cur, "SELECT * FROM artikel")
         self.no_record(row)
-        #self.twArtikel.currentCellChanged.connect(self.get_row_vertraege)
-        #self.twArtikel.clicked.connect(self.get_row_vertraege)
+        
         self.twArtikel.horizontalHeader().setStretchLastSection(True)
         self.twArtikel.setAlternatingRowColors(True)
         self.twArtikel.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.fill_table_artikel(conn, self.twArtikel)
-        #self.lbId_Vertrag.setVisible(False)
-        #self.coHistory.currentTextChanged.connect(self.show_history)
-        #self.tbPaswd.installEventFilter(self)
+        self.fill_table_artikel()
+        self.coHaupt.currentIndexChanged.connect(self.fill_table_artikel)
+        self.coHaupt.currentTextChanged.connect(self.fillcoUnter)
+        self.coUnter.currentIndexChanged.connect(self.fill_table_artikel)
+        self.coLager.currentIndexChanged.connect(self.fill_table_artikel)
+        self.btGn.triggered.connect(self.fill_table_artikel)
+        self.btGe.triggered.connect(self.fill_table_artikel)
+        self.btRo.triggered.connect(self.fill_table_artikel)
+
+    def fillcoUnter(self):
+        self.fillCombobox(conn, self.coUnter, 'u_kategorie')
     
-    def fill_table_artikel(self, conn, model):
+    def fillCombobox(self, conn, model, table):
+        """Combobox füllen"""
+        model.clear()
+        sql = "SELECT name, id FROM " + table + " Order by name asc"
+        if table == 'u_kategorie':
+            sql = "SELECT name, id FROM " + table + " Where kategorie='" + self.coHaupt.currentText() + "' Order by name asc"
+        df = pd.read_sql_query(sql, conn)
+        model.addItem('Alles')
+        for row_number in df.index:
+            for i in range(0, 1):
+                value= df.iloc[row_number][i]
+                model.addItem(value)
+
+    def prRefresh(self):
+        self.fillCombobox(conn, self.coLager, 'lager')
+        self.fillCombobox(conn, self.coHaupt, 'h_kategorie')
+        self.fillCombobox(conn, self.coUnter, 'u_kategorie')
+                    
+    def fill_table_artikel(self):
+        model =  self.twArtikel
+        haupt = self.coHaupt.currentText()
+        unter = self.coUnter.currentText()
+        lager = self.coLager.currentText()
         """Tabelle Artikel füllen"""
         clsTb.remove_rows_tabelle(model)
-        sql = "SELECT name, marke, anzahl,  id FROM artikel Order by name asc"
+        sql = "SELECT * FROM artikel Order by name asc"
         df = pd.read_sql_query(sql, conn)
+        i = 0
         for row_number in df.index:
-            model.insertRow(row_number)
-            for i in range(0, 4):
-                value= df.iloc[row_number][i]
-                model.setItem(row_number,i, QtWidgets.QTableWidgetItem(value)) 
-               
+            s_id= df.iloc[row_number][0]
+            s_name= df.iloc[row_number][1]
+            s_haupt= df.iloc[row_number][2]
+            s_unter= df.iloc[row_number][3]
+            s_marke= df.iloc[row_number][4]
+            s_barcode= df.iloc[row_number][5]
+            s_anzahl= df.iloc[row_number][6]
+            if (haupt == s_haupt and unter == s_unter) or (haupt == "Alles" and unter == "Alles") or (haupt == s_haupt and unter == "Alles"):
+                model.insertRow(i)
+                model.setItem(i,0, QtWidgets.QTableWidgetItem(s_name)) 
+                model.setItem(i,1, QtWidgets.QTableWidgetItem(s_marke)) 
+                model.setItem(i,2, prSetAgliment(s_anzahl)) 
+                model.setItem(i,3, QtWidgets.QTableWidgetItem('')) 
+                model.setItem(i,4, QtWidgets.QTableWidgetItem(''))
+                model.setItem(i,5, QtWidgets.QTableWidgetItem(s_haupt)) 
+                model.setItem(i,6, QtWidgets.QTableWidgetItem(s_unter)) 
+                model.setItem(i,7, QtWidgets.QTableWidgetItem(s_id)) 
+                model.setItem(i,8, QtWidgets.QTableWidgetItem(s_barcode)) 
+                self.set_color(model, i)
+                i = i + 1
+                sql1 = "SELECT * FROM buchung Where barcode='" + s_barcode + "'"
+                df1 = pd.read_sql_query(sql1, conn)
+                for row_number1 in df1.index:
+                    s_id= df1.iloc[row_number1][0]
+                    s_lager= df1.iloc[row_number1][2]
+                    s_datum= df1.iloc[row_number1][3]
+                    s_anzahl= df1.iloc[row_number1][6]
+                    days = clsSu.get_time_diff(s_datum)
+                    if self.check_ampel(days):
+                        if (lager == s_lager or lager == "Alles"):
+                            model.insertRow(i)
+                            model.setItem(i,0, QtWidgets.QTableWidgetItem('')) 
+                            model.setItem(i,1, QtWidgets.QTableWidgetItem('')) 
+                            model.setItem(i,2, prSetAgliment(s_anzahl))
+                            model.setItem(i,3, prSetAgliment(s_datum))
+                            model.setItem(i,4, QtWidgets.QTableWidgetItem(s_lager))
+                            model.setItem(i,5, QtWidgets.QTableWidgetItem('')) 
+                            model.setItem(i,6, QtWidgets.QTableWidgetItem('')) 
+                            model.setItem(i,7, QtWidgets.QTableWidgetItem(s_id)) 
+                            model.setItem(i,8, QtWidgets.QTableWidgetItem(s_barcode)) 
+                            self.set_color_ablaufdatum(model, i, days)
+                            i = i + 1
+                        
         model.setColumnWidth(0,300)
         model.setColumnWidth(1,200)
         model.setColumnWidth(2,50)
@@ -486,10 +567,34 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         model.setColumnWidth(4,130)
         model.setColumnWidth(5,0)
         model.hideColumn(5)
-        model.sortItems(0, QtCore.Qt.AscendingOrder)
+        model.hideColumn(6)
+        model.hideColumn(7)
+        model.hideColumn(8)
         model.selectRow(0)
-    
+
+    def check_ampel(self, n_diff):
+        l_display = False
+        if n_diff < 0:
+            if self.btRo.isChecked(): l_display = True
+        elif n_diff < 30:
+            if self.btGe.isChecked(): l_display = True
+        else: 
+            if self.btGn.isChecked(): l_display = True
+        return l_display
             
+    def set_color_ablaufdatum(self, model,i, n_diff):
+        color = "white"
+        if n_diff < 0:
+            color = "red"
+        elif n_diff < 30:
+            color = "yellow"
+        for x in range(0, 5):
+            model.item(i,x).setBackground(QtGui.QColor(color))
+    
+    def set_color(self, model,i):
+        for x in range(0, 5):
+            model.item(i,x).setBackground(QtGui.QColor('skyblue'))
+                        
     def no_record(self, row) :
         if row <= 0:
             self.btBearbeiten.setEnabled(False)

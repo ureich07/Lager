@@ -5,7 +5,6 @@ import mariadb
 import configparser
 from PySide6.QtWidgets import QMessageBox
 
-
 #################################### Ini-Datei Funktionen ##################################################################
 class IniFile():
     def fcOpenIniFile(sFile):
@@ -114,6 +113,7 @@ class TableBase():
         """Alle Einträge aus der Tabelle löschen"""
         for row in reversed(range(model.rowCount())):
             model.removeRow(row)        
+
     
 #################################### Hilfs Funktionen ##################################################################
 class Support():
@@ -174,9 +174,28 @@ class Support():
             return True
         except ValueError:
             return False
+    
+    def get_time_diff(end_day):
+        """ 
+        Ermittelt die Differenz zwischen übergebenen Datum und aktuellen Datum in Tage
         
-
-
+        :param end_day: Datum
+        :return:        Tage
+        """
+        stime = Support.convert_datum(end_day)
+        end_day = Support.convert_datum(stime)
+        t = str(end_day).split('.')
+        end_day = t[0] + "." + t[1] + "." + t[2]
+        
+        present_day = datetime.datetime.now()
+        stime = str(present_day).split(' ')
+        t = str(stime[0]).split('-')
+        present_day = t[2] + "." + t[1] + "." + t[0]
+        
+        a = datetime.datetime.strptime(present_day, '%d.%m.%Y')
+        b = datetime.datetime.strptime(end_day, '%d.%m.%Y')
+        return (a-b).days   
+    
     def error_file(sModule, sError):
         """
 

@@ -288,6 +288,10 @@ class Ui_ArtikelErfassen(object):
         self.twListe.setHorizontalHeaderItem(3, __qtablewidgetitem3)
         self.twListe.setObjectName(u"twListe")
         self.twListe.setMinimumSize(QSize(211, 0))
+        self.twListe.setSortingEnabled(True)
+        self.twListe.verticalHeader().setVisible(False)
+        self.twListe.verticalHeader().setMinimumSectionSize(16)
+        self.twListe.verticalHeader().setDefaultSectionSize(16)
 
         self.gridLayout.addWidget(self.twListe, 14, 1, 1, 5)
 

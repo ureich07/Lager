@@ -431,6 +431,21 @@
        <height>0</height>
       </size>
      </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>96</number>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderMinimumSectionSize">
+      <number>16</number>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>16</number>
+     </attribute>
      <column>
       <property name="text">
        <string>Datum</string>
