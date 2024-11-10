@@ -147,6 +147,13 @@ class Support():
             lFound = False
         return lFound
 
+    def is_numeric(s):
+        try:
+            float(s) # für Float- und Int-Werte
+            return True
+        except ValueError:
+            return False
+        
     def get_time_id():
         """eindeueutigen Schlüssel erzeugen als Datensatzzeiger"""
         stime = datetime.datetime.now()
@@ -194,7 +201,7 @@ class Support():
         
         a = datetime.datetime.strptime(present_day, '%d.%m.%Y')
         b = datetime.datetime.strptime(end_day, '%d.%m.%Y')
-        return (a-b).days   
+        return (b-a).days   
     
     def error_file(sModule, sError):
         """

@@ -62,6 +62,9 @@ class Function():
         fields =  ['id', 'barcode', 'lager', 'datum', 'name', 'preis', 'anzahl']
         return fields
 
+    def strucktur_history():
+        fields =  ['id', 'barcode', 'name', 'datum', 'preis', 'anzahl']
+        return fields
     
     
     def save_tabelle(pd, sql, conn, tabelle):

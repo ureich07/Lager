@@ -146,6 +146,8 @@
    <addaction name="btGn"/>
    <addaction name="btGe"/>
    <addaction name="btRo"/>
+   <addaction name="separator"/>
+   <addaction name="actionSuchen"/>
   </widget>
   <action name="btErfassen">
    <property name="icon">
@@ -229,6 +231,20 @@
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionSuchen">
+   <property name="text">
+    <string>Suchen:</string>
+   </property>
+   <property name="toolTip">
+    <string>Suchen</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::TextHeuristicRole</enum>
    </property>
   </action>
  </widget>

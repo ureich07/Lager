@@ -53,6 +53,7 @@ class Ui_Kategorie(object):
         font = QFont()
         font.setPointSize(8)
         self.twHaupt.setFont(font)
+        self.twHaupt.verticalHeader().setVisible(False)
         self.twHaupt.verticalHeader().setMinimumSectionSize(20)
         self.twHaupt.verticalHeader().setDefaultSectionSize(20)
 
@@ -75,12 +76,13 @@ class Ui_Kategorie(object):
         self.twUnter.setHorizontalHeaderItem(1, __qtablewidgetitem3)
         self.twUnter.setObjectName(u"twUnter")
         self.twUnter.setFont(font)
+        self.twUnter.verticalHeader().setVisible(False)
         self.twUnter.verticalHeader().setMinimumSectionSize(20)
         self.twUnter.verticalHeader().setDefaultSectionSize(20)
 
         self.gridLayout.addWidget(self.twUnter, 1, 5, 4, 1)
 
-        self.verticalSpacer = QSpacerItem(20, 118, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.verticalSpacer = QSpacerItem(20, 118, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.gridLayout.addItem(self.verticalSpacer, 2, 1, 2, 1)
 
@@ -90,7 +92,7 @@ class Ui_Kategorie(object):
 
         self.gridLayout.addWidget(self.tbUnter, 2, 3, 1, 2)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 118, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.verticalSpacer_2 = QSpacerItem(20, 118, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.gridLayout.addItem(self.verticalSpacer_2, 3, 4, 1, 1)
 
@@ -124,6 +126,7 @@ class Ui_Kategorie(object):
         self.twLager.setHorizontalHeaderItem(1, __qtablewidgetitem5)
         self.twLager.setObjectName(u"twLager")
         self.twLager.setFont(font)
+        self.twLager.verticalHeader().setVisible(False)
         self.twLager.verticalHeader().setMinimumSectionSize(20)
         self.twLager.verticalHeader().setDefaultSectionSize(20)
 
@@ -144,16 +147,17 @@ class Ui_Kategorie(object):
         self.twMarke.setHorizontalHeaderItem(1, __qtablewidgetitem7)
         self.twMarke.setObjectName(u"twMarke")
         self.twMarke.setFont(font)
+        self.twMarke.verticalHeader().setVisible(False)
         self.twMarke.verticalHeader().setMinimumSectionSize(20)
         self.twMarke.verticalHeader().setDefaultSectionSize(20)
 
         self.gridLayout.addWidget(self.twMarke, 6, 5, 3, 1)
 
-        self.verticalSpacer_4 = QSpacerItem(20, 88, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.verticalSpacer_4 = QSpacerItem(20, 88, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.gridLayout.addItem(self.verticalSpacer_4, 7, 1, 1, 1)
 
-        self.verticalSpacer_3 = QSpacerItem(20, 88, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.verticalSpacer_3 = QSpacerItem(20, 88, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.gridLayout.addItem(self.verticalSpacer_3, 7, 4, 1, 1)
 
