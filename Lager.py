@@ -231,6 +231,9 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
             else:
                 self.prUpdateArtikel()
             self.prSaveBuchung()
+            if self.chTglB.isChecked(): 
+                pass
+                #Ausbuchen und history schreiben
             self.prClearFelder()
             self.tbBarcode.setFocus()
     
@@ -339,7 +342,10 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
         self.tbKohle.setText(value[14]) 
         self.tbZucker.setText(value[15]) 
         self.tbPreis.setText(value[16]) 
-        
+        state = False
+        if int(value[17]) == 1: state = True
+        self.chTglB.setChecked(state)
+    
         
         self.coLager.setCurrentText('')
     
@@ -372,6 +378,7 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
         self.coUnter.setCurrentIndex(0)
         self.coLager.setCurrentIndex(0)
         self.coEinheit.setCurrentIndex(0)
+        self.chTglB.setChecked(False)
         
     def prSaveArtikel(self):
         global l_start; l_start = False
@@ -407,9 +414,11 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
     
     def collect_value_artikel(self, id):
         n_anz = int(n_anzahl) + int(self.tbAnzahl.text())
+        n_tglBedarf = 0
+        if self.chTglB.isChecked(): n_tglBedarf = 1
         value =  [id, self.tbName.text(), self.coHaupt.currentText(), self.coUnter.currentText(), self.coMarke.currentText(), self.tbBarcode.text(),
                   str(n_anz), self.tbSoll.text(), self.tbGroesse.text(), self.coEinheit.currentText(), self.tbBrennwert.text(), 
-                  self.tbKalorien.text(), self.tbProtein.text(), self.tbKohle.text(), self.tbZucker.text(), self.tbFett.text(), self.tbPreis.text()]  
+                  self.tbKalorien.text(), self.tbProtein.text(), self.tbKohle.text(), self.tbZucker.text(), self.tbFett.text(), self.tbPreis.text(), n_tglBedarf]  
         return value    
         
     def collect_value_buchnung(self, id):
@@ -462,8 +471,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def initMainWindow(self):
         self.resize(1200,700)
-        self.btConfig.setIcon(QIcon(os.path.join(basedir, "Resources/sql.png")))
-        self.btConfig.triggered.connect(self.settings)
+        #self.btConfig.setIcon(QIcon(os.path.join(basedir, "Resources/sql.png")))
+        #self.btConfig.triggered.connect(self.settings)
         self.btErfassen.triggered.connect(self.prErfassen)
         self.btBearbeiten.triggered.connect(self.prKategorie)
         self.prRefresh()
@@ -483,6 +492,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btGn.triggered.connect(self.fill_table_artikel)
         self.btGe.triggered.connect(self.fill_table_artikel)
         self.btRo.triggered.connect(self.fill_table_artikel)
+        self.btBedarf.triggered.connect(self.fill_table_artikel)
+        self.btRefresh.triggered.connect(self.fill_table_artikel)
         self._createStatusBar()
         self.wcSuchenBarcode.editingFinished.connect(self.fill_table_artikel)
         self.wcSuchenName.editingFinished.connect(self.prSucheDatensatz)
@@ -614,11 +625,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.fillCombobox(conn, self.coUnter, 'u_kategorie')
                     
     def fill_table_artikel(self):
+        
         if self.wcSuchenBarcode.text() =='' and self.wcSuchenName.text() =='':
             haupt = self.coHaupt.currentText()
             unter = self.coUnter.currentText()  
             lager = self.coLager.currentText()    
             sql = "SELECT * FROM artikel Order by name asc"
+            if self.btBedarf.isChecked():
+                sql = "SELECT * FROM artikel Where tglBedarf = 1 Order by name asc"
         if self.wcSuchenBarcode.text() !='' and self.wcSuchenName.text() =='':
             s_barcode= self.wcSuchenBarcode.text()
             haupt = "Alles"

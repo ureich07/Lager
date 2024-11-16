@@ -141,13 +141,15 @@
    <addaction name="separator"/>
    <addaction name="btBearbeiten"/>
    <addaction name="separator"/>
-   <addaction name="btConfig"/>
+   <addaction name="btRefresh"/>
    <addaction name="separator"/>
    <addaction name="btGn"/>
    <addaction name="btGe"/>
    <addaction name="btRo"/>
    <addaction name="separator"/>
    <addaction name="actionSuchen"/>
+   <addaction name="btBedarf"/>
+   <addaction name="separator"/>
   </widget>
   <action name="btErfassen">
    <property name="icon">
@@ -168,14 +170,6 @@
    </property>
    <property name="text">
     <string>Bearbeiten</string>
-   </property>
-  </action>
-  <action name="btConfig">
-   <property name="text">
-    <string>Config</string>
-   </property>
-   <property name="toolTip">
-    <string>SQL Verbindung bearbeiten</string>
    </property>
   </action>
   <action name="btGn">
@@ -245,6 +239,32 @@
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::TextHeuristicRole</enum>
+   </property>
+  </action>
+  <action name="btBedarf">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Täglicher Bedarf</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="btRefresh">
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/112.ico</normaloff>Resources/112.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Refresh</string>
+   </property>
+   <property name="toolTip">
+    <string>Liste aktualisieren</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
    </property>
   </action>
  </widget>
