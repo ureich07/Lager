@@ -498,8 +498,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.wcSuchenBarcode.editingFinished.connect(self.fill_table_artikel)
         self.wcSuchenName.editingFinished.connect(self.prSucheDatensatz)
         self.wcSuchenBarcode.setFocus()
+        self.progressBar.setValue(0)
         self.fill_table_artikel()
-        #self.twArtikel.installEventFilter(self)
+        
+        
         
     def prArtikelentnahme(self, mi):
         row = mi.row()
@@ -522,6 +524,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 n_anzA = int(n_anzA) - int(n_anz_entnommen)
                 if n_anzA < 0: n_anzA = 0
                 self.prUpdateArtikel(n_anzA,id_artikel )
+            self.fill_table_artikel()
     
     def prSaveHistory(self, id, s_anzahl):
         fields = clsFu.strucktur_history()
@@ -625,7 +628,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.fillCombobox(conn, self.coUnter, 'u_kategorie')
                     
     def fill_table_artikel(self):
-        
         if self.wcSuchenBarcode.text() =='' and self.wcSuchenName.text() =='':
             haupt = self.coHaupt.currentText()
             unter = self.coUnter.currentText()  
@@ -645,7 +647,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         clsTb.remove_rows_tabelle(model)
         df = pd.read_sql_query(sql, conn)
         i = 0
+        n_max = df.index.size
+        self.progressBar.setValue(0)
+        self.progressBar.setMaximum(n_max)
         for row_number in df.index:
+            self.progressBar.setValue(row_number)
             s_id= df.iloc[row_number][0]
             s_name= df.iloc[row_number][1]
             s_haupt= df.iloc[row_number][2]
@@ -662,9 +668,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     model.setItem(i,3, QtWidgets.QTableWidgetItem('')) 
                     model.setItem(i,4, QtWidgets.QTableWidgetItem(''))
                     model.setItem(i,5, QtWidgets.QTableWidgetItem(s_id)) 
-                    #model.setItem(i,6, QtWidgets.QTableWidgetItem(s_haupt)) 
-                    #model.setItem(i,7, QtWidgets.QTableWidgetItem(s_unter)) 
-                    #model.setItem(i,8, QtWidgets.QTableWidgetItem(s_barcode)) 
                     self.set_color(model, i)
                     i = i + 1
                     sql1 = "SELECT * FROM buchung Where barcode='" + s_barcode + "'"
@@ -684,9 +687,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                 model.setItem(i,3, prSetAgliment(s_datum))
                                 model.setItem(i,4, QtWidgets.QTableWidgetItem(s_lager))
                                 model.setItem(i,5, QtWidgets.QTableWidgetItem(s_id)) 
-                                #model.setItem(i,6, QtWidgets.QTableWidgetItem('')) 
-                                #model.setItem(i,7, QtWidgets.QTableWidgetItem('')) 
-                                #model.setItem(i,8, QtWidgets.QTableWidgetItem(s_barcode)) 
                                 self.set_color_ablaufdatum(model, i, days)
                                 i = i + 1
                         
@@ -695,16 +695,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         model.setColumnWidth(2,50)
         model.setColumnWidth(3,100)
         model.setColumnWidth(4,130)
-        #model.setColumnWidth(5,0)
-        #model.setColumnWidth(6,0)
-        #model.setColumnWidth(7,0)
-        #model.setColumnWidth(8,0)
         model.hideColumn(5)
-        #model.hideColumn(6)
-        #model.hideColumn(7)
-        #model.hideColumn(8)
         model.selectRow(0)
         self.wcSuchenBarcode.setText('') 
+        self.progressBar.setValue(0)
         
     def prSucheDatensatz(self):
         """ Suche Datensatz nach name"""

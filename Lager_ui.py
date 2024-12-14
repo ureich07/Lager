@@ -18,8 +18,8 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QTransform)
 from PySide6.QtWidgets import (QAbstractItemView, QApplication, QComboBox, QGridLayout,
     QHeaderView, QLabel, QMainWindow, QMenuBar,
-    QSizePolicy, QStatusBar, QTableWidget, QTableWidgetItem,
-    QToolBar, QWidget)
+    QProgressBar, QSizePolicy, QStatusBar, QTableWidget,
+    QTableWidgetItem, QToolBar, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -46,7 +46,7 @@ class Ui_MainWindow(object):
         icon3 = QIcon()
         icon3.addFile(u"Resources/TRFFC10A.ICO", QSize(), QIcon.Normal, QIcon.On)
         self.btGn.setIcon(icon3)
-        self.btGn.setMenuRole(QAction.MenuRole.NoRole)
+        self.btGn.setMenuRole(QAction.NoRole)
         self.btGe = QAction(MainWindow)
         self.btGe.setObjectName(u"btGe")
         self.btGe.setCheckable(True)
@@ -54,7 +54,7 @@ class Ui_MainWindow(object):
         icon4 = QIcon()
         icon4.addFile(u"Resources/TRFFC10B.ICO", QSize(), QIcon.Normal, QIcon.Off)
         self.btGe.setIcon(icon4)
-        self.btGe.setMenuRole(QAction.MenuRole.NoRole)
+        self.btGe.setMenuRole(QAction.NoRole)
         self.btRo = QAction(MainWindow)
         self.btRo.setObjectName(u"btRo")
         self.btRo.setCheckable(True)
@@ -62,25 +62,50 @@ class Ui_MainWindow(object):
         icon5 = QIcon()
         icon5.addFile(u"Resources/TRFFC10C.ICO", QSize(), QIcon.Normal, QIcon.Off)
         self.btRo.setIcon(icon5)
-        self.btRo.setMenuRole(QAction.MenuRole.NoRole)
+        self.btRo.setMenuRole(QAction.NoRole)
         self.actionSuchen = QAction(MainWindow)
         self.actionSuchen.setObjectName(u"actionSuchen")
         self.actionSuchen.setVisible(False)
-        self.actionSuchen.setMenuRole(QAction.MenuRole.TextHeuristicRole)
+        self.actionSuchen.setMenuRole(QAction.NoRole)
         self.btBedarf = QAction(MainWindow)
         self.btBedarf.setObjectName(u"btBedarf")
         self.btBedarf.setCheckable(True)
-        self.btBedarf.setMenuRole(QAction.MenuRole.NoRole)
+        self.btBedarf.setMenuRole(QAction.NoRole)
         self.btRefresh = QAction(MainWindow)
         self.btRefresh.setObjectName(u"btRefresh")
         icon6 = QIcon()
         icon6.addFile(u"Resources/112.ico", QSize(), QIcon.Normal, QIcon.Off)
         self.btRefresh.setIcon(icon6)
-        self.btRefresh.setMenuRole(QAction.MenuRole.NoRole)
+        self.btRefresh.setMenuRole(QAction.NoRole)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout_2 = QGridLayout(self.centralwidget)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.twArtikel = QTableWidget(self.centralwidget)
+        if (self.twArtikel.columnCount() < 6):
+            self.twArtikel.setColumnCount(6)
+        __qtablewidgetitem = QTableWidgetItem()
+        self.twArtikel.setHorizontalHeaderItem(0, __qtablewidgetitem)
+        __qtablewidgetitem1 = QTableWidgetItem()
+        self.twArtikel.setHorizontalHeaderItem(1, __qtablewidgetitem1)
+        __qtablewidgetitem2 = QTableWidgetItem()
+        self.twArtikel.setHorizontalHeaderItem(2, __qtablewidgetitem2)
+        __qtablewidgetitem3 = QTableWidgetItem()
+        self.twArtikel.setHorizontalHeaderItem(3, __qtablewidgetitem3)
+        __qtablewidgetitem4 = QTableWidgetItem()
+        self.twArtikel.setHorizontalHeaderItem(4, __qtablewidgetitem4)
+        __qtablewidgetitem5 = QTableWidgetItem()
+        self.twArtikel.setHorizontalHeaderItem(5, __qtablewidgetitem5)
+        self.twArtikel.setObjectName(u"twArtikel")
+        self.twArtikel.setMinimumSize(QSize(320, 0))
+        self.twArtikel.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.twArtikel.setSelectionBehavior(QAbstractItemView.SelectItems)
+        self.twArtikel.verticalHeader().setVisible(False)
+        self.twArtikel.verticalHeader().setMinimumSectionSize(16)
+        self.twArtikel.verticalHeader().setDefaultSectionSize(16)
+
+        self.gridLayout_2.addWidget(self.twArtikel, 1, 0, 1, 1)
+
         self.gridLayout = QGridLayout()
         self.gridLayout.setObjectName(u"gridLayout")
         self.label = QLabel(self.centralwidget)
@@ -112,30 +137,13 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
 
-        self.twArtikel = QTableWidget(self.centralwidget)
-        if (self.twArtikel.columnCount() < 6):
-            self.twArtikel.setColumnCount(6)
-        __qtablewidgetitem = QTableWidgetItem()
-        self.twArtikel.setHorizontalHeaderItem(0, __qtablewidgetitem)
-        __qtablewidgetitem1 = QTableWidgetItem()
-        self.twArtikel.setHorizontalHeaderItem(1, __qtablewidgetitem1)
-        __qtablewidgetitem2 = QTableWidgetItem()
-        self.twArtikel.setHorizontalHeaderItem(2, __qtablewidgetitem2)
-        __qtablewidgetitem3 = QTableWidgetItem()
-        self.twArtikel.setHorizontalHeaderItem(3, __qtablewidgetitem3)
-        __qtablewidgetitem4 = QTableWidgetItem()
-        self.twArtikel.setHorizontalHeaderItem(4, __qtablewidgetitem4)
-        __qtablewidgetitem5 = QTableWidgetItem()
-        self.twArtikel.setHorizontalHeaderItem(5, __qtablewidgetitem5)
-        self.twArtikel.setObjectName(u"twArtikel")
-        self.twArtikel.setMinimumSize(QSize(320, 0))
-        self.twArtikel.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
-        self.twArtikel.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
-        self.twArtikel.verticalHeader().setVisible(False)
-        self.twArtikel.verticalHeader().setMinimumSectionSize(16)
-        self.twArtikel.verticalHeader().setDefaultSectionSize(16)
+        self.progressBar = QProgressBar(self.centralwidget)
+        self.progressBar.setObjectName(u"progressBar")
+        self.progressBar.setMaximumSize(QSize(16777215, 5))
+        self.progressBar.setValue(24)
+        self.progressBar.setTextVisible(False)
 
-        self.gridLayout_2.addWidget(self.twArtikel, 1, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.progressBar, 2, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
@@ -148,7 +156,7 @@ class Ui_MainWindow(object):
         self.toolBar = QToolBar(MainWindow)
         self.toolBar.setObjectName(u"toolBar")
         self.toolBar.setEnabled(True)
-        self.toolBar.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.toolBar.setLayoutDirection(Qt.LeftToRight)
         MainWindow.addToolBar(Qt.TopToolBarArea, self.toolBar)
 
         self.toolBar.addSeparator()
@@ -190,8 +198,6 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(tooltip)
         self.btRefresh.setToolTip(QCoreApplication.translate("MainWindow", u"Liste aktualisieren", None))
 #endif // QT_CONFIG(tooltip)
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Kategorie", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Lagerort", None))
         ___qtablewidgetitem = self.twArtikel.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Name", None));
         ___qtablewidgetitem1 = self.twArtikel.horizontalHeaderItem(1)
@@ -204,6 +210,8 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Lagerort", None));
         ___qtablewidgetitem5 = self.twArtikel.horizontalHeaderItem(5)
         ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"ID", None));
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Kategorie", None))
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Lagerort", None))
         self.toolBar.setWindowTitle(QCoreApplication.translate("MainWindow", u"toolBar", None))
     # retranslateUi
 

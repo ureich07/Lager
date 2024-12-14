@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 14.0.2, 2024-11-02T14:27:18. -->
+<!-- Written by QtCreator 14.0.2, 2024-12-14T13:40:19. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -172,10 +172,8 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.X:/03-Uwe/Programmierung/04-Python/Projekte/Lager/Lager/clsFunction.py</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">X:/03-Uwe/Programmierung/04-Python/Projekte/Lager/Lager/clsFunction.py</value>
     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
-    <value type="QString" key="PythonEditor.RunConfiguation.Script">X:\03-Uwe\Programmierung\04-Python\Projekte\Lager\Lager\clsFunction.py</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">X:/03-Uwe/Programmierung/04-Python/Projekte/Lager/Lager</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.2">
     <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
@@ -191,10 +189,8 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.X:/03-Uwe/Programmierung/04-Python/Projekte/Lager/Lager/clsSupportfunction.py</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">X:/03-Uwe/Programmierung/04-Python/Projekte/Lager/Lager/clsSupportfunction.py</value>
     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
-    <value type="QString" key="PythonEditor.RunConfiguation.Script">X:\03-Uwe\Programmierung\04-Python\Projekte\Lager\Lager\clsSupportfunction.py</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">X:/03-Uwe/Programmierung/04-Python/Projekte/Lager/Lager</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.3">
     <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
@@ -210,10 +206,8 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.X:/03-Uwe/Programmierung/04-Python/Projekte/Lager/Lager/Lager.py</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">X:/03-Uwe/Programmierung/04-Python/Projekte/Lager/Lager/Lager.py</value>
     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
-    <value type="QString" key="PythonEditor.RunConfiguation.Script">X:\03-Uwe\Programmierung\04-Python\Projekte\Lager\Lager\Lager.py</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">X:/03-Uwe/Programmierung/04-Python/Projekte/Lager/Lager</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.4">
     <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
@@ -229,12 +223,86 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.X:/03-Uwe/Programmierung/04-Python/Projekte/Lager/Lager/__init__.py</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">X:/03-Uwe/Programmierung/04-Python/Projekte/Lager/Lager/__init__.py</value>
     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
-    <value type="QString" key="PythonEditor.RunConfiguation.Script">X:\03-Uwe\Programmierung\04-Python\Projekte\Lager\Lager\__init__.py</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">X:/03-Uwe/Programmierung/04-Python/Projekte/Lager/Lager</value>
    </valuemap>
-   <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">5</value>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.5">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="int" key="Analyzer.Valgrind.Callgrind.CostFormat">0</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="bool" key="PE.EnvironmentAspect.PrintOnRun">false</value>
+    <value type="QString" key="PerfRecordArgsId">-e cpu-cycles --call-graph &quot;dwarf,4096&quot; -F 250</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">clsFunction.py2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.X:/03-Uwe/Programmierung/08-GitHub/Lager/clsFunction.py</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">X:/03-Uwe/Programmierung/08-GitHub/Lager/clsFunction.py</value>
+    <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
+    <value type="QString" key="PythonEditor.RunConfiguation.Script">X:\03-Uwe\Programmierung\08-GitHub\Lager\clsFunction.py</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">X:/03-Uwe/Programmierung/08-GitHub/Lager</value>
+   </valuemap>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.6">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="int" key="Analyzer.Valgrind.Callgrind.CostFormat">0</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="bool" key="PE.EnvironmentAspect.PrintOnRun">false</value>
+    <value type="QString" key="PerfRecordArgsId">-e cpu-cycles --call-graph &quot;dwarf,4096&quot; -F 250</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">clsSupportfunction.py2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.X:/03-Uwe/Programmierung/08-GitHub/Lager/clsSupportfunction.py</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">X:/03-Uwe/Programmierung/08-GitHub/Lager/clsSupportfunction.py</value>
+    <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
+    <value type="QString" key="PythonEditor.RunConfiguation.Script">X:\03-Uwe\Programmierung\08-GitHub\Lager\clsSupportfunction.py</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">X:/03-Uwe/Programmierung/08-GitHub/Lager</value>
+   </valuemap>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.7">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="int" key="Analyzer.Valgrind.Callgrind.CostFormat">0</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="bool" key="PE.EnvironmentAspect.PrintOnRun">false</value>
+    <value type="QString" key="PerfRecordArgsId">-e cpu-cycles --call-graph &quot;dwarf,4096&quot; -F 250</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Lager.py2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.X:/03-Uwe/Programmierung/08-GitHub/Lager/Lager.py</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">X:/03-Uwe/Programmierung/08-GitHub/Lager/Lager.py</value>
+    <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
+    <value type="QString" key="PythonEditor.RunConfiguation.Script">X:\03-Uwe\Programmierung\08-GitHub\Lager\Lager.py</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">X:/03-Uwe/Programmierung/08-GitHub/Lager</value>
+   </valuemap>
+   <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.8">
+    <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
+    <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
+    <value type="int" key="Analyzer.Valgrind.Callgrind.CostFormat">0</value>
+    <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="CustomOutputParsers"/>
+    <value type="int" key="PE.EnvironmentAspect.Base">2</value>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="bool" key="PE.EnvironmentAspect.PrintOnRun">false</value>
+    <value type="QString" key="PerfRecordArgsId">-e cpu-cycles --call-graph &quot;dwarf,4096&quot; -F 250</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">__init__.py2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.X:/03-Uwe/Programmierung/08-GitHub/Lager/__init__.py</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">X:/03-Uwe/Programmierung/08-GitHub/Lager/__init__.py</value>
+    <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
+    <value type="QString" key="PythonEditor.RunConfiguation.Script">X:\03-Uwe\Programmierung\08-GitHub\Lager\__init__.py</value>
+    <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">X:/03-Uwe/Programmierung/08-GitHub/Lager</value>
+   </valuemap>
+   <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">9</value>
   </valuemap>
  </data>
  <data>
