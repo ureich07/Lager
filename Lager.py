@@ -11,11 +11,11 @@ from clsSupportfunction import TableBase as clsTb
 
 from PySide6.QtWidgets import QApplication, QWidget,QLabel,QLineEdit, QMenu
 from PySide6.QtWidgets import QApplication, QMainWindow, QDialog, QAbstractItemView, QInputDialog
-from PySide6.QtGui import  QValidator, QIcon, Qt#, QDoubleValidator, QIntValidator, QMouseEvent
-
+from PySide6.QtGui import  QValidator, QIcon, Qt
 
 from PySide6 import  QtCore, QtWidgets, QtGui
-from PySide6.QtCore import  QEvent
+from PySide6.QtCore import  QEvent, QItemSelectionModel, QAbstractTableModel, QModelIndex
+
 
 # Important:
 # You need to run the following command to generate the ui_form.py file
@@ -418,7 +418,7 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
         if self.chTglB.isChecked(): n_tglBedarf = 1
         value =  [id, self.tbName.text(), self.coHaupt.currentText(), self.coUnter.currentText(), self.coMarke.currentText(), self.tbBarcode.text(),
                   str(n_anz), self.tbSoll.text(), self.tbGroesse.text(), self.coEinheit.currentText(), self.tbBrennwert.text(), 
-                  self.tbKalorien.text(), self.tbProtein.text(), self.tbKohle.text(), self.tbZucker.text(), self.tbFett.text(), self.tbPreis.text(), n_tglBedarf]  
+                  self.tbKalorien.text(), self.tbProtein.text(), self.tbKohle.text(), self.tbZucker.text(), self.tbFett.text(), self.tbPreis.text(), str(n_tglBedarf)]  
         return value    
         
     def collect_value_buchnung(self, id):
@@ -450,8 +450,7 @@ class ArtikelErfassen(QDialog, Ui_ArtikelErfassen):
             for i in range(0, 4):
                 value= df.iloc[row_number][i]
                 model.setItem(row_number,i, prSetAgliment(value))
-                
-               
+        
     def setTableAnzahl(self):
         self.twListe.setColumnWidth(0,80)
         self.twListe.setColumnWidth(1,50)
@@ -494,6 +493,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.btRo.triggered.connect(self.fill_table_artikel)
         self.btBedarf.triggered.connect(self.fill_table_artikel)
         self.btRefresh.triggered.connect(self.fill_table_artikel)
+        #self.btRefresh.triggered.connect(self.correctBuchnung)
         self._createStatusBar()
         self.wcSuchenBarcode.editingFinished.connect(self.fill_table_artikel)
         self.wcSuchenName.editingFinished.connect(self.prSucheDatensatz)
@@ -525,7 +525,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 if n_anzA < 0: n_anzA = 0
                 self.prUpdateArtikel(n_anzA,id_artikel )
             self.fill_table_artikel()
-    
+        
+        column = 2
+        index = self.twArtikel.model().index(row, column)
+        self.twArtikel.selectionModel().select(index, QItemSelectionModel.Select | QItemSelectionModel.Current)
+
     def prSaveHistory(self, id, s_anzahl):
         fields = clsFu.strucktur_history()
         value = self.collect_value_History(id, s_anzahl)
@@ -534,7 +538,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 conn.commit()
         except Exception as e:
             clsSu.error_file('save_historie', str(e))    
-    
     
     def collect_value_History(self, id, s_anzahl):
         present_day = datetime.datetime.now()
@@ -699,21 +702,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         model.selectRow(0)
         self.wcSuchenBarcode.setText('') 
         self.progressBar.setValue(0)
-        
+       
     def prSucheDatensatz(self):
         """ Suche Datensatz nach name"""
         s_name= self.wcSuchenName.text()
+        if s_name =='': return
+            
         model =  self.twArtikel
         haupt = "Alles"
         unter = "Alles"
         lager = "Alles"
         """Tabelle Artikel füllen"""
         clsTb.remove_rows_tabelle(model)
-        sql = "SELECT * FROM artikel Order by name asc"
+        sql = "SELECT * FROM artikel WHERE name LIKE '%" + s_name + "%' Order by name asc"
         df = pd.read_sql_query(sql, conn)
         i = 0
         for row_number in df.index:
-            if s_name.upper() in df.iloc[row_number][1].upper():
+            #if s_name.upper() in df.iloc[row_number][1].upper():
                 s_id= df.iloc[row_number][0]
                 s_name= df.iloc[row_number][1]
                 s_haupt= df.iloc[row_number][2]
@@ -770,6 +775,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         model.hideColumn(8)
         model.selectRow(0)
         self.wcSuchenName.setText('')
+        
 
     def check_ampel(self, n_diff):
         l_display = False
@@ -814,6 +820,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def prKategorie(self):
         self.w = Kategorie()
         self.w.show()
+
+    def correctBuchnung(self):
+        sql = "SELECT * FROM artikel Order by name asc"
+        df = pd.read_sql_query(sql, conn)
+        n_max = df.index.size
+        self.progressBar.setValue(0)
+        self.progressBar.setMaximum(n_max)
+        for row_number in df.index:
+            self.progressBar.setValue(row_number)
+            s_barcode= df.iloc[row_number][5]
+            id_artikel = df.iloc[row_number][0]
+            anz = self.getAnzahlofArtikel("SELECT * FROM buchung Where barcode='" + s_barcode + "'")
+            self.prUpdateArtikel(anz,id_artikel)
+        self.progressBar.setValue(0)
+                        
+    def getAnzahlofArtikel(self, sql):
+        df = pd.read_sql_query(sql, conn)
+        nAnz = 0
+        for row_number in df.index:
+            nAnz = nAnz + int(df.iloc[row_number][6])
+        
+        return nAnz
 
 def main():
     app = QApplication(sys.argv)
